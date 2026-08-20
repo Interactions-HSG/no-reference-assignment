@@ -1,3 +1,7 @@
+//! How long to wait before retrying, given how many attempts have failed.
+//!
+//! The caller does the sleeping and the retrying. `next` is the decision.
+
 const std = @import("std");
 
 pub const Backoff = struct {
@@ -5,10 +9,10 @@ pub const Backoff = struct {
     cap_ms: u64,
     rand: std.Random,
 
-    // Double each time, up to the cap. No jitter: the delays are already
-    // different because every client failed at a slightly different moment.
+    /// Milliseconds to wait before attempt number `attempt` (0 is the first retry).
     pub fn next(self: *Backoff, attempt: u6) u64 {
-        const shifted = self.base_ms << attempt;
-        return if (shifted > self.cap_ms) self.cap_ms else shifted;
+        _ = self;
+        _ = attempt;
+        @panic("not implemented");
     }
 };
